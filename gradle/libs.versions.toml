@@ -1,0 +1,165 @@
+[versions]
+activity-compose = "1.8.2"
+agp = "8.2.2"
+android-constraint-compose = "1.0.1"
+android-corutines-kotlin = "1.7.3"
+android-dagger-hilt = "2.50"
+android-datastore = "1.0.0"
+android-hilt-navigation-compose = "1.1.0"
+android-navigation-compose = "2.7.7"
+android-paging = "3.2.1"
+android-paging-compose = "3.2.1"
+android-room-db = "2.6.1"
+#noinspection GradleDependency
+android-tools-desugar = "1.1.5"
+androidx-compose-runtime = "1.6.1"
+androidx-lifecylce-compose = "2.7.0"
+androidx-startup = "1.1.1"
+androidx-test-ext-junit = "1.1.5"
+appcompat = "1.6.1"
+com-google-accompanist-systemuicontroller = "0.33.2-alpha"
+com-google-accompanist-swiperefresh = "0.33.2-alpha"
+compose-bom = "2024.02.00"
+core-ktx = "1.12.0"
+espresso-core = "3.5.1"
+io-coil-kt = "2.4.0"
+junit = "4.13.2"
+lifecycle-runtime-ktx = "2.7.0"
+lottie-compose = "6.1.0"
+material = "1.11.0"
+okhttp3-interceptor-version = "5.0.0-alpha.6"
+org-jetbrains-kotlin-android = "1.9.22"
+org-jetbrains-kotlin-jvm = "1.9.22"
+protobuf = "0.9.1"
+retrofit-version = "2.9.0"
+splashscreen-core = "1.0.1"
+
+#compose
+compose-option-compiler = "1.5.9"
+
+#permissions
+accompanist-permissions = "0.30.1"
+
+#maps
+maps-compose = "4.3.0"
+maps-secret-properties = "2.0.1"
+
+#config
+compileSdk = "34"
+targetSdk = "34"
+minSdk = "23" ##Android 6.0
+
+
+[libraries]
+core-ktx = { group = "androidx.core", name = "core-ktx", version.ref = "core-ktx" }
+com-android-tools-desugar = { module = "com.android.tools:desugar_jdk_libs", version.ref = "android-tools-desugar" }
+androidx-startup-runtime = { module = "androidx.startup:startup-runtime", version.ref = "androidx-startup" }
+
+#lifecycle
+lifecycle-runtime-ktx = { group = "androidx.lifecycle", name = "lifecycle-runtime-ktx", version.ref = "lifecycle-runtime-ktx" }
+androidx-compose-runtime-runtime = { group = "androidx.compose.runtime", name = "runtime", version.ref = "androidx-compose-runtime" }
+androidx-compose-runtime-livedata = { group = "androidx.compose.runtime", name = "runtime-livedata", version.ref = "androidx-compose-runtime" }
+androidx-lifecycle-viewmodel-compose = { group = "androidx.lifecycle", name = "lifecycle-viewmodel-compose", version.ref = "androidx-lifecylce-compose" }
+androidx-lifecycle-runtime-compose = { group = "androidx.lifecycle", name = "lifecycle-runtime-compose", version.ref = "androidx-lifecylce-compose" }
+
+#compose
+activity-compose = { group = "androidx.activity", name = "activity-compose", version.ref = "activity-compose" }
+compose-bom = { group = "androidx.compose", name = "compose-bom", version.ref = "compose-bom" }
+material3 = { group = "androidx.compose.material3", name = "material3" }
+androidx-constraintlayout-compose = { module = "androidx.constraintlayout:constraintlayout-compose", version.ref = "android-constraint-compose" }
+ui = { group = "androidx.compose.ui", name = "ui" }
+ui-graphics = { group = "androidx.compose.ui", name = "ui-graphics" }
+ui-tooling = { group = "androidx.compose.ui", name = "ui-tooling" }
+ui-tooling-preview = { group = "androidx.compose.ui", name = "ui-tooling-preview" }
+androidx-icons-extended = { group = "androidx.compose.material", name = "material-icons-extended" }
+
+#navigation compose
+androidx-navigation-compose-ktx = { module = "androidx.navigation:navigation-compose", version.ref = "android-navigation-compose" }
+androidx-hilt-navigation-compose = { module = "androidx.hilt:hilt-navigation-compose", version.ref = "android-hilt-navigation-compose" }
+
+#hilt
+com-google-dagger-hilt-android = { module = "com.google.dagger:hilt-android", version.ref = "android-dagger-hilt" }
+com-google-dagger-hilt-compiler = { module = "com.google.dagger:hilt-compiler", version.ref = "android-dagger-hilt" }
+
+#room
+androidx-room-compiler = { module = "androidx.room:room-compiler", version.ref = "android-room-db" }
+androidx-room-ktx = { module = "androidx.room:room-ktx", version.ref = "android-room-db" }
+androidx-room-paging = { module = "androidx.room:room-paging", version.ref = "android-room-db" }
+androidx-room-runtime = { module = "androidx.room:room-runtime", version.ref = "android-room-db" }
+
+#corutines
+org-jetbrains-kotlin-corutines-android = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-android", version.ref = "android-corutines-kotlin" }
+
+#permissions
+com-google-accompanist-permissions = { module = "com.google.accompanist:accompanist-permissions", version.ref = "accompanist-permissions" }
+
+#network
+com-squareup-retrofit = { module = "com.squareup.retrofit2:retrofit", version.ref = "retrofit-version" }
+com-squareup-retrofit-gson = { module = "com.squareup.retrofit2:converter-gson", version.ref = "retrofit-version" }
+com-squareup-okhttp3-logging-interceptor = { module = "com.squareup.okhttp3:logging-interceptor", version.ref = "okhttp3-interceptor-version" }
+
+#datastore
+androidx-datastore-preferences = { module = "androidx.datastore:datastore-preferences", version.ref = "android-datastore" }
+androix-datastore-proto = { module = "androidx.datastore:datastore", version.ref = "android-datastore" }
+
+#paging
+androidx-paging-compose = { module = "androidx.paging:paging-compose", version.ref = "android-paging-compose" }
+androidx-paging-runtime = { module = "androidx.paging:paging-runtime", version.ref = "android-paging" }
+
+#ui
+com-airbnb-lottie-compose = { module = "com.airbnb.android:lottie-compose", version.ref = "lottie-compose" }
+io-coil-kt = { module = "io.coil-kt:coil-compose", version.ref = "io-coil-kt" }
+com-google-accompanist-systemuicontroller = { module = "com.google.accompanist:accompanist-systemuicontroller", version.ref = "com-google-accompanist-systemuicontroller" }
+androidx-core-core-splashscreen = { module = "androidx.core:core-splashscreen", version.ref = "splashscreen-core" }
+com-google-accompanist-swiperefresh = { module = "com.google.accompanist:accompanist-swiperefresh", version.ref = "com-google-accompanist-swiperefresh" }
+
+#testing
+junit = { group = "junit", name = "junit", version.ref = "junit" }
+androidx-test-ext-junit = { group = "androidx.test.ext", name = "junit", version.ref = "androidx-test-ext-junit" }
+espresso-core = { group = "androidx.test.espresso", name = "espresso-core", version.ref = "espresso-core" }
+ui-test-manifest = { group = "androidx.compose.ui", name = "ui-test-manifest" }
+ui-test-junit4 = { group = "androidx.compose.ui", name = "ui-test-junit4" }
+appcompat = { group = "androidx.appcompat", name = "appcompat", version.ref = "appcompat" }
+material = { group = "com.google.android.material", name = "material", version.ref = "material" }
+
+#Maps
+com-android-google-maps-compose = { group = "com.google.maps.android", name = "maps-compose", version.ref = "maps-compose" }
+com-google-maps-android-secret-properties = { module = "com.google.android.libraries.mapsplatform.secrets-gradle-plugin:secrets-gradle-plugin", version.ref = "maps-secret-properties" }
+
+
+[plugins]
+com-android-application = { id = "com.android.application", version.ref = "agp" }
+org-jetbrains-kotlin-android = { id = "org.jetbrains.kotlin.android", version.ref = "org-jetbrains-kotlin-android" }
+detekt = { id = "io.gitlab.arturbosch.detekt", version = "1.23.0" }  ## for lint detekt
+com-dagger-hilt = { id = "com.google.dagger.hilt.android", version.ref = "android-dagger-hilt" }
+org-jetbrains-kotlin-jvm = { id = "org.jetbrains.kotlin.jvm", version.ref = "org-jetbrains-kotlin-jvm" }
+com-android-library = { id = "com.android.library", version.ref = "agp" }
+com-google-protobuf = { id = "com.google.protobuf", version.ref = "protobuf" }
+
+[bundles]
+android-room = [
+    "androidx-room-ktx",
+    "androidx-room-paging",
+    "androidx-room-runtime",
+]
+
+androidx-paging = [
+    "androidx-paging-compose",
+    "androidx-paging-runtime",
+]
+
+com-retrofit = [
+    "com-squareup-retrofit",
+    "com-squareup-retrofit-gson",
+    "com-squareup-okhttp3-logging-interceptor",
+]
+
+androidx-datastore = [
+    "androidx-datastore-preferences",
+    "androix-datastore-proto",
+]
+
+com-google-maps = [
+    "com-android-google-maps-compose",
+    "com-google-maps-android-secret-properties"
+]

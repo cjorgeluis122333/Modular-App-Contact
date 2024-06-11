@@ -20,25 +20,16 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.DisposableEffect
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.platform.LocalContext
-import androidx.compose.ui.platform.LocalLifecycleOwner
 import androidx.core.splashscreen.SplashScreen.Companion.installSplashScreen
-import androidx.lifecycle.Lifecycle
-import androidx.lifecycle.LifecycleEventObserver
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.rememberNavController
-import com.google.accompanist.permissions.ExperimentalPermissionsApi
-import com.google.accompanist.permissions.rememberMultiplePermissionsState
-import cu.xetid.dtvc.androidtrainingapp.common.permissionLocation
-import cu.xetid.dtvc.androidtrainingapp.common.permissionLocation2
-import cu.xetid.dtvc.androidtrainingapp.common.permissionNotification
-import cu.xetid.dtvc.androidtrainingapp.common.permissionPhoneState
-import cu.xetid.dtvc.androidtrainingapp.home.navigation.homeGraph
-import cu.xetid.dtvc.androidtrainingapp.login.navigation.logInGraph
+import cu.xetid.dtvc.androidtrainingapp.home.homescreen.navigation.homeGraph
+import cu.xetid.dtvc.androidtrainingapp.home.insertion.navigation.insertGraph
+import cu.xetid.dtvc.androidtrainingapp.home.update.navigation.updateGraph
 import cu.xetid.dtvc.androidtrainingapp.ui.navigation.Navigator
 import cu.xetid.dtvc.androidtrainingapp.ui.navigation.NavigatorHandler
+import cu.xetid.dtvc.androidtrainingapp.ui.navigation.routes.home.HomeRoute
 import cu.xetid.dtvc.androidtrainingapp.ui.theme.AndroidTrainingAppTheme
 import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
@@ -49,7 +40,7 @@ class MainActivity : ComponentActivity() {
     @Inject
     lateinit var navigator: Navigator
 
-    private val viewModel: MainActivityViewModel by viewModels()
+    //private val viewModel: MainActivityViewModel by viewModels()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         installSplashScreen()
@@ -60,7 +51,7 @@ class MainActivity : ComponentActivity() {
             object : ViewTreeObserver.OnPreDrawListener {
                 @RequiresApi(Build.VERSION_CODES.TIRAMISU)
                 override fun onPreDraw(): Boolean {
-                    viewModel.isReady?.let {
+                  //  viewModel.isReady?.let {
                         println("entre")
                         content.viewTreeObserver.removeOnPreDrawListener(this)
                         setContent {
@@ -70,15 +61,14 @@ class MainActivity : ComponentActivity() {
                                     color = MaterialTheme.colorScheme.surface
                                 ) {
                                     MainContainer(
-                                        startDestination = viewModel.firstScreen,
                                         navigator = navigator
                                     )
                                 }
                             }
                         }
                         return true
-                    }
-                    return false
+                 //   }
+                   // return false
                 }
             }
         )
@@ -86,57 +76,21 @@ class MainActivity : ComponentActivity() {
 }
 
 @RequiresApi(Build.VERSION_CODES.TIRAMISU)
-@OptIn(ExperimentalPermissionsApi::class)
 @Composable
 private fun MainContainer(
-    startDestination: String, navigator: Navigator
+    navigator: Navigator
 ) {
     val navController = rememberNavController()
 
-    val context = LocalContext.current
-    val activity = context.findActivity()
-    val permissionsState = rememberMultiplePermissionsState(
-        permissions = listOf(
-            permissionLocation,
-            permissionLocation2,
-            permissionNotification,
-            permissionPhoneState
-        )
-    )
-    val lifecycleOwner = LocalLifecycleOwner.current
-
-    //Permission Request
-    DisposableEffect(key1 = lifecycleOwner, effect = {
-        val observer = LifecycleEventObserver { _, event ->
-            if (event == Lifecycle.Event.ON_START) {
-                permissionsState.launchMultiplePermissionRequest()
-            }
-        }
-        lifecycleOwner.lifecycle.addObserver(observer)
-
-        onDispose {
-            lifecycleOwner.lifecycle.removeObserver(observer)
-        }
-    })
-
-    //Setting application
-//    val registerResponse = rememberLauncherForActivityResult(
-//        contract = ActivityResultContracts.StartActivityForResult(),
-//        onResult = {},
-//    )
 
     Column {
-        NavHost(
-            navController = navController,
-            startDestination = startDestination,
-            modifier = Modifier.weight(1.0f)
-        ) {
-            logInGraph()
-
+        NavHost(navController = navController, startDestination = HomeRoute.RootRoute.route) {
             homeGraph()
+            insertGraph()
+            updateGraph()
         }
-    }
 
+    }
     //Listener of the Navigator
     NavigatorHandler(navigator = navigator, navController = navController)
 }

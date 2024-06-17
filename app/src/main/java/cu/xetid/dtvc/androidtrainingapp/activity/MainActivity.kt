@@ -13,7 +13,6 @@ import android.view.ViewTreeObserver
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.result.ActivityResultLauncher
-import androidx.activity.viewModels
 import androidx.annotation.RequiresApi
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
@@ -25,8 +24,8 @@ import androidx.core.splashscreen.SplashScreen.Companion.installSplashScreen
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.rememberNavController
 import cu.xetid.dtvc.androidtrainingapp.home.homescreen.navigation.homeGraph
-import cu.xetid.dtvc.androidtrainingapp.home.insertion.navigation.insertGraph
-import cu.xetid.dtvc.androidtrainingapp.home.update.navigation.updateGraph
+import cu.xetid.dtvc.androidtrainingapp.home.insertionscreen.navigation.insertGraph
+import cu.xetid.dtvc.androidtrainingapp.home.updatescreen.navigation.updateGraph
 import cu.xetid.dtvc.androidtrainingapp.ui.navigation.Navigator
 import cu.xetid.dtvc.androidtrainingapp.ui.navigation.NavigatorHandler
 import cu.xetid.dtvc.androidtrainingapp.ui.navigation.routes.home.HomeRoute

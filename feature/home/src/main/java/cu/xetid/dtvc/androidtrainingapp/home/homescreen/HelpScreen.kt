@@ -1,4 +1,4 @@
-package cu.xetid.dtvc.androidtrainingapp.home.homescreen.screen
+package cu.xetid.dtvc.androidtrainingapp.home.homescreen
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.PaddingValues
@@ -12,7 +12,6 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.hilt.navigation.compose.hiltViewModel
-import cu.xetid.dtvc.androidtrainingapp.home.homescreen.viewmodel.HelpViewModel
 import cu.xetid.dtvc.androidtrainingapp.ui.navigation.routes.favorite.FavoriteRoute
 import cu.xetid.dtvc.androidtrainingapp.ui.navigation.routes.update.UpdateRoute
 

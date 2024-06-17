@@ -1,4 +1,4 @@
-package cu.xetid.dtvc.androidtrainingapp.home.homescreen.screen
+package cu.xetid.dtvc.androidtrainingapp.home.homescreen
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.PaddingValues
@@ -12,20 +12,20 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.hilt.navigation.compose.hiltViewModel
-import cu.xetid.dtvc.androidtrainingapp.home.homescreen.viewmodel.HomeViewModel
-import cu.xetid.dtvc.androidtrainingapp.ui.navigation.routes.help.HelpRoute
+import cu.xetid.dtvc.androidtrainingapp.ui.navigation.routes.insertion.InsertionRoute
 
 @Composable
-fun HomeScreen(viewModel: HomeViewModel = hiltViewModel()) {
+fun FavoriteScreen(viewModel: FavoriteViewModel = hiltViewModel()) {
 
     Scaffold {
-        HomeContent(it, navigateTo = viewModel::navigateTo)
+        FavoriteContent(it, navigateTo = viewModel::navigateTo)
     }
+
 }
 
-@Composable
-fun HomeContent(paddingValues: PaddingValues, modifier: Modifier = Modifier,navigateTo:(String)->Unit) {
 
+@Composable
+fun FavoriteContent(paddingValues: PaddingValues, modifier: Modifier = Modifier, navigateTo:(String)->Unit) {
     LazyColumn(
         modifier = modifier
             .padding(paddingValues)
@@ -35,12 +35,11 @@ fun HomeContent(paddingValues: PaddingValues, modifier: Modifier = Modifier,navi
     ) {
 
         item {
-            Text("This is the home screen")
-            Button(onClick = { navigateTo(HelpRoute.HelpScreenRoute.route) }) {
-                Text(text = "Nav to help")
-            }
+            Text(text = "This is the Favorite screen")
+           Button(onClick = { navigateTo.invoke(InsertionRoute.InsertionScreenRoute.route) }) {
+
+           }
         }
 
     }
-
 }

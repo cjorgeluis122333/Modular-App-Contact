@@ -8,7 +8,6 @@ import cu.xetid.dtvc.androidtrainingapp.ui.navigation.NavigationCommand
 import cu.xetid.dtvc.androidtrainingapp.ui.navigation.Navigator
 import cu.xetid.dtvc.androidtrainingapp.ui.navigation.routes.home.HomeRoute
 import dagger.hilt.android.lifecycle.HiltViewModel
-import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.launch
@@ -62,9 +61,6 @@ class InsertionViewModel @Inject constructor(
         navigator.navigate(NavigationCommand.PopBackstack)
     }
 
-    private fun navigateToHome(){
-        navigator.navigate(NavigationCommand.NavigateTo(HomeRoute.HomeScreenRoute.route))
-    }
 
     //                            All variables
     private val _firstName: MutableStateFlow<String> = MutableStateFlow("")

@@ -20,7 +20,6 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import coil.compose.rememberAsyncImagePainter
 import coil.request.ImageRequest
-import cu.xetid.dtvc.androidtrainingapp.home.R
 import cu.xetid.dtvc.androidtrainingapp.model.dto.Contact
 
 

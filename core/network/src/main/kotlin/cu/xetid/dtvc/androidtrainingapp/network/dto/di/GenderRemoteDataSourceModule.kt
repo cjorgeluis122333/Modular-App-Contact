@@ -1,4 +1,4 @@
-package com.example.contactnotmodular.core.network.di
+package cu.xetid.dtvc.androidtrainingapp.network.dto.di
 
 import dagger.Module
 import dagger.Provides

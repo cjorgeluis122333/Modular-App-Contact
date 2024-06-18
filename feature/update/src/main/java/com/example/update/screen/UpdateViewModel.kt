@@ -91,9 +91,6 @@ class UpdateViewModel @Inject constructor(
         navigator.navigate(NavigationCommand.PopBackstack)
     }
 
-    private fun navigateToHome() {
-        navigator.navigate(NavigationCommand.NavigateTo(HomeRoute.HomeScreenRoute.route))
-    }
 
     //                            All variables
     private val _firstName: MutableStateFlow<String> = MutableStateFlow("")

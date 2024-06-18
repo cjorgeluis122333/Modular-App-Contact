@@ -94,26 +94,3 @@ private fun MainContainer(
     NavigatorHandler(navigator = navigator, navController = navController)
 }
 
-/**
- * Navigate to App Information
- * @param response contain a registerForActivityResult function,
- * with StartActivityForResult() as ActivityResultContracts
- * */
-
-fun Activity.toAppInformation(response: ActivityResultLauncher<Intent>) {
-    response.launch(
-        Intent(
-            Settings.ACTION_APPLICATION_DETAILS_SETTINGS,
-        ).apply {
-            data = Uri.fromParts("package", packageName, null)
-        })
-}
-
-fun Context.findActivity(): Activity {
-    var context = this
-    while (context is ContextWrapper) {
-        if (context is Activity) return context
-        context = context.baseContext
-    }
-    throw IllegalStateException("No activity")
-}

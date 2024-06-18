@@ -6,6 +6,7 @@ import cu.xetid.dtvc.androidtrainingapp.model.projection.ContactNameProjection
 import cu.xetid.dtvc.androidtrainingapp.model.projection.ContactPictureProjection
 import cu.xetid.dtvc.androidtrainingapp.network.dto.response.ContactResponse
 
+
 fun ContactResponse.toModel(): Contact = Contact(
     firstName = this.name?.first.orEmpty(),
     city = this.location?.city,

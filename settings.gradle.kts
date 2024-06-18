@@ -31,3 +31,5 @@ include(":core:ui")
 //FEATURE
 include(":feature:home")
 include(":feature:login")
+include(":feature:insertion")
+include(":feature:update")

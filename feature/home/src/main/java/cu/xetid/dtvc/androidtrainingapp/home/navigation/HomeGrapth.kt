@@ -3,9 +3,9 @@ package cu.xetid.dtvc.androidtrainingapp.home.navigation
 import androidx.navigation.NavGraphBuilder
 import androidx.navigation.compose.composable
 import androidx.navigation.navigation
-import cu.xetid.dtvc.androidtrainingapp.home.homescreen.FavoriteScreen
-import cu.xetid.dtvc.androidtrainingapp.home.homescreen.HelpScreen
-import cu.xetid.dtvc.androidtrainingapp.home.homescreen.HomeScreen
+import cu.xetid.dtvc.androidtrainingapp.home.screen.FavoriteScreen
+import cu.xetid.dtvc.androidtrainingapp.home.screen.HelpScreen
+import cu.xetid.dtvc.androidtrainingapp.home.screen.HomeScreen
 import cu.xetid.dtvc.androidtrainingapp.ui.navigation.routes.favorite.FavoriteRoute
 import cu.xetid.dtvc.androidtrainingapp.ui.navigation.routes.help.HelpRoute
 import cu.xetid.dtvc.androidtrainingapp.ui.navigation.routes.home.HomeRoute

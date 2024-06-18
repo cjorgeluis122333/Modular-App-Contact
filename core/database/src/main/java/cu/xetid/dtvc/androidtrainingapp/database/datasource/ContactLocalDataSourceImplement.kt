@@ -1,9 +1,9 @@
 package cu.xetid.dtvc.androidtrainingapp.database.datasource
 
-import cu.xetid.dtvc.androidtrainingapp.domain.datasourse.local.ContactLocalDataSource
 import cu.xetid.dtvc.androidtrainingapp.database.dao.ContactDao
 import cu.xetid.dtvc.androidtrainingapp.database.mapper.toEntity
 import cu.xetid.dtvc.androidtrainingapp.database.mapper.toModel
+import cu.xetid.dtvc.androidtrainingapp.domain.datasourse.local.ContactLocalDataSource
 import cu.xetid.dtvc.androidtrainingapp.model.dto.Contact
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
@@ -22,6 +22,14 @@ class ContactLocalDataSourceImplement @Inject constructor(
 
     override fun selectContactBySpecificId(contactId: Int): Flow<Contact> {
         return contactDao.selectContactById(contactId = contactId).map { it.toModel() }
+    }
+
+    override fun selectFavoriteContact(): Flow<List<Contact>> {
+        return contactDao.selectFavoriteContact().map {
+            it.map { fContact ->
+                fContact.toModel()
+            }
+        }
     }
 
     override suspend fun insetNewContact(newContact: Contact) {

@@ -23,9 +23,9 @@ import androidx.compose.ui.Modifier
 import androidx.core.splashscreen.SplashScreen.Companion.installSplashScreen
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.rememberNavController
-import cu.xetid.dtvc.androidtrainingapp.home.homescreen.navigation.homeGraph
-import cu.xetid.dtvc.androidtrainingapp.home.insertionscreen.navigation.insertGraph
-import cu.xetid.dtvc.androidtrainingapp.home.updatescreen.navigation.updateGraph
+import com.example.insertion.navigation.insertGraph
+import com.example.update.navigation.updateGraph
+import cu.xetid.dtvc.androidtrainingapp.home.navigation.homeGraph
 import cu.xetid.dtvc.androidtrainingapp.ui.navigation.Navigator
 import cu.xetid.dtvc.androidtrainingapp.ui.navigation.NavigatorHandler
 import cu.xetid.dtvc.androidtrainingapp.ui.navigation.routes.home.HomeRoute

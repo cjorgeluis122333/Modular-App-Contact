@@ -17,6 +17,7 @@ interface ContactRepository {
     suspend fun getUserPicture(): ResultValue<ContactPictureProjection>
 
     fun selectAllContact(): Flow<List<Contact>>
+    fun selectFavoriteContact(): Flow<List<Contact>>
 
     fun selectContactSpecificById(contactId: Int): Flow<Contact>
 

@@ -45,6 +45,10 @@ class ContactRepositoryImplement @Inject constructor(
         return contactLocalDataSource.selectAllContact().flowOn(ioDispatcher)
     }
 
+    override fun selectFavoriteContact(): Flow<List<Contact>> {
+        return contactLocalDataSource.selectFavoriteContact().flowOn(ioDispatcher)
+    }
+
     override fun selectContactSpecificById(contactId: Int): Flow<Contact> {
         return contactLocalDataSource.selectContactBySpecificId(contactId).flowOn(ioDispatcher)
     }

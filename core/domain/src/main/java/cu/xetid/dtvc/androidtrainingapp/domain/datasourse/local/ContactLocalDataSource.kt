@@ -10,6 +10,8 @@ interface ContactLocalDataSource {
     fun selectAllContact(): Flow<List<Contact>>
 
     fun selectContactBySpecificId(contactId: Int): Flow<Contact>
+
+    fun selectFavoriteContact():Flow<List<Contact>>
     suspend fun insetNewContact(newContact: Contact)
 
     suspend fun updateContact(contactToUpdate: Contact)

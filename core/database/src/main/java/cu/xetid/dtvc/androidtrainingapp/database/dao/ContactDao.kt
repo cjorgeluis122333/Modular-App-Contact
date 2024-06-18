@@ -19,6 +19,8 @@ interface ContactDao {
     @Query("Select * from contact where :contactId = contactId")
     fun selectContactById(contactId:Int): Flow<ContactEntity>
 
+    @Query("Select * from contact where favorite==1 Order by firstName Asc")
+    fun selectFavoriteContact():Flow<List<ContactEntity>>
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun insetNewContact(newContact: ContactEntity)

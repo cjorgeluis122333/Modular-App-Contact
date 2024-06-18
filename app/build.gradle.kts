@@ -68,6 +68,8 @@ dependencies {
     //Modules features
     implementation(project(":feature:home"))
     implementation(project(":feature:login"))
+    implementation(project(":feature:insertion"))
+    implementation(project(":feature:update"))
 
     //Core
     implementation(libs.core.ktx)

@@ -45,7 +45,7 @@ import cu.xetid.dtvc.androidtrainingapp.model.dto.Contact
 import cu.xetid.dtvc.androidtrainingapp.ui.component.GenericText
 import cu.xetid.dtvc.androidtrainingapp.ui.component.GenericTopAppBar
 import cu.xetid.dtvc.androidtrainingapp.ui.navigation.routes.update.UpdateRoute
-
+//AppContactModularArchitecture
 @Composable
 fun HomeScreen(viewModel: HomeViewModel = hiltViewModel()) {
 

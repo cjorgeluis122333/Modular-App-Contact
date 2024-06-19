@@ -24,9 +24,9 @@ import javax.inject.Inject
 @HiltViewModel
 class HomeViewModel @Inject constructor(
     private val navigator: Navigator,
-    private val contactSelectAllUsesCase: ContactSelectAllUsesCase,
     private val contactDeleteUsesCase: ContactDeleteUsesCase,
-    private val selectFavoriteContactUsesCase: ContactSelectFavoriteUsesCase,
+    contactSelectAllUsesCase: ContactSelectAllUsesCase,
+    selectFavoriteContactUsesCase: ContactSelectFavoriteUsesCase,
     private val contactSearchLocationUsesCase: ContactSearchLocationUsesCase,
     private val contactSearchPictureUsesCase: ContactSearchPictureUsesCase,
     private val contactSearchNameUsesCase: ContactSearchNameUsesCase

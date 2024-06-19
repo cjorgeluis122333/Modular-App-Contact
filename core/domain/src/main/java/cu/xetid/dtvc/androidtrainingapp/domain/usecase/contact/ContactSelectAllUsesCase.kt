@@ -7,7 +7,7 @@ import javax.inject.Inject
 
 class ContactSelectAllUsesCase @Inject constructor(private val contactRepository: ContactRepository) {
 
-    operator fun invoke():Flow<List<Contact>> = contactRepository.selectAllContact()
+    operator fun invoke(): Flow<List<Contact>> = contactRepository.selectAllContact()
 
 
 }

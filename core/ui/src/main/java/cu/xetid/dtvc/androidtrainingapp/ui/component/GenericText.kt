@@ -13,6 +13,7 @@ fun GenericText(
     textTitle: String,
     modifier: Modifier = Modifier,
     textStyle: TextStyle = MaterialTheme.typography.bodyLarge,
+    maxLine:Int = 1
 ) {
     Text(
         text = textTitle,
@@ -22,7 +23,8 @@ fun GenericText(
         color = MaterialTheme.colorScheme.onPrimaryContainer,
         letterSpacing = 1.sp,
         fontSize = textStyle.fontSize,
-        modifier = modifier
+        modifier = modifier,
+        maxLines = maxLine,
 
     )
 }

@@ -1,12 +1,12 @@
 package cu.xetid.dtvc.androidtrainingapp.home.screen
 
 import androidx.compose.material3.Scaffold
-
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
+import androidx.compose.ui.Modifier
 import androidx.hilt.navigation.compose.hiltViewModel
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import cu.xetid.dtvc.androidtrainingapp.home.screen.component.ContactButtonBar
 import cu.xetid.dtvc.androidtrainingapp.home.viewmodel.HomeViewModel
 import cu.xetid.dtvc.androidtrainingapp.ui.component.GenericTopAppBar
@@ -14,31 +14,29 @@ import cu.xetid.dtvc.androidtrainingapp.ui.component.GenericTopAppBar
 @Composable
 fun FavoriteScreen(viewModel: HomeViewModel = hiltViewModel()) {
 
-    LaunchedEffect(viewModel) {
-        viewModel.selectFavoriteContact()
-    }
+    val selectFavoriteContactSubscriberAtUi by
+        viewModel.allFavoriteContactSubscriberAtUI.collectAsStateWithLifecycle()
 
-    val selectFavorite by viewModel.selectFavorite.collectAsState()
-    val isLoading by viewModel.isLoading.collectAsState()
-    val isError by viewModel.isError.collectAsState()
+    val stateFavorite by viewModel.homeUIState.collectAsState()
+
 
     Scaffold(topBar = {
         GenericTopAppBar(
             title = "Favorite",
             isNavigationIconEnable = false
         )
-    },  bottomBar = {
+    }, bottomBar = {
         ContactButtonBar(navigateTo = viewModel::navigateTo)
     }
 
-        ) {
+    ) {
         HomeContent(
             paddingValues = it,
             navigateTo = viewModel::navigateTo,
-            selectAll = selectFavorite,
-            isError = isError,
+            selectAll = selectFavoriteContactSubscriberAtUi,
             onDelete = viewModel::deleteContact,
-            isLoading = isLoading
+            stateHome = stateFavorite,
+            modifier = Modifier
         )
     }
 

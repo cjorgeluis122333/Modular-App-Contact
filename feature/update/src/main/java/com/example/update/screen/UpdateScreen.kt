@@ -92,7 +92,7 @@ fun UpdateContent(
             Row {
                 GenericText(
                     textTitle = contact.firstName,
-                    textStyle = MaterialTheme.typography.headlineLarge
+                    textStyle = MaterialTheme.typography.headlineLarge,
                 )
                 CardUpdateIsFavoriteIconsButtonComponent(
                     onFunction = onFavorite,

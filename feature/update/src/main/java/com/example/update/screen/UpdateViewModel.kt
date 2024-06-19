@@ -2,16 +2,16 @@ package com.example.update.screen
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.example.update.state.UpdateState
 import cu.xetid.dtvc.androidtrainingapp.domain.usecase.contact.ContactSelectByIdUsesCase
 import cu.xetid.dtvc.androidtrainingapp.domain.usecase.contact.ContactUpdateUsesCase
 import cu.xetid.dtvc.androidtrainingapp.model.dto.Contact
 import cu.xetid.dtvc.androidtrainingapp.ui.navigation.NavigationCommand
 import cu.xetid.dtvc.androidtrainingapp.ui.navigation.Navigator
-import cu.xetid.dtvc.androidtrainingapp.ui.navigation.routes.home.HomeRoute
 import dagger.hilt.android.lifecycle.HiltViewModel
-import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
@@ -35,8 +35,6 @@ class UpdateViewModel @Inject constructor(
                     _lastName.value = _contactToUpdate.value.lastName.orEmpty()
                     _firstName.value = _contactToUpdate.value.firstName
                     _favorite.value = _contactToUpdate.value.favorite
-
-                    delay(2000)
                     _isLoading.value = false
                 }
             } catch (e: Exception) {
@@ -91,6 +89,15 @@ class UpdateViewModel @Inject constructor(
         navigator.navigate(NavigationCommand.PopBackstack)
     }
 
+    //                            Change State
+    private fun changeState(isLoading: Boolean, isError: String) {
+        _updateState.update {
+            it.copy(
+                error = isError,
+                isLoading = isLoading
+            )
+        }
+    }
 
     //                            All variables
     private val _firstName: MutableStateFlow<String> = MutableStateFlow("")
@@ -110,6 +117,11 @@ class UpdateViewModel @Inject constructor(
 
 
     //                        All state
+
+    private val _updateState: MutableStateFlow<UpdateState> = MutableStateFlow(UpdateState())
+    val updateState: StateFlow<UpdateState> = _updateState
+
+
     private val _contactToUpdate: MutableStateFlow<Contact> = MutableStateFlow(Contact())
     val contactToUpdate: StateFlow<Contact> = _contactToUpdate
 

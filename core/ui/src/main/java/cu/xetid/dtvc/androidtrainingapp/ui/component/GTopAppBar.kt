@@ -16,10 +16,17 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
+import androidx.compose.ui.graphics.vector.ImageVector
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun GenericTopAppBar(title: String,navigateBack:()->Unit={},isNavigationIconEnable:Boolean=true) {
+fun GenericTopAppBar(
+    title: String,
+    navigateBack: () -> Unit = {},
+    isNavigationIconEnable: Boolean = true,
+    actionsList: List<ImageVector> = emptyList(),
+    actionsEventList: List<() -> Unit> = emptyList()
+) {
 
     var isBackEnable by rememberSaveable { mutableStateOf(true) }
     TopAppBar(colors = TopAppBarDefaults.centerAlignedTopAppBarColors(
@@ -38,19 +45,31 @@ fun GenericTopAppBar(title: String,navigateBack:()->Unit={},isNavigationIconEnab
             textDecoration = androidx.compose.ui.text.style.TextDecoration.None,
             textAlign = androidx.compose.ui.text.style.TextAlign.Start
         )
-    }, navigationIcon = {if (isNavigationIconEnable){
-        IconButton(onClick = {
-            navigateBack.invoke()
-            isBackEnable = !isBackEnable
-        }, enabled = isBackEnable, content = {
-            Icon(imageVector = Icons.AutoMirrored.Filled.ArrowBack, contentDescription = "go back")
+    }, navigationIcon = {
+        if (isNavigationIconEnable) {
+            IconButton(onClick = {
+                navigateBack.invoke()
+                isBackEnable = !isBackEnable
+            }, enabled = isBackEnable, content = {
+                Icon(
+                    imageVector = Icons.AutoMirrored.Filled.ArrowBack,
+                    contentDescription = "go back"
+                )
+            }
+            )
         }
-        )}
     },
 
+
         actions = {
-          //Al icon button
-        })
+            if (actionsList.isNotEmpty() && actionsEventList.isNotEmpty() && actionsEventList.size == actionsList.size)
+                for (i in 0..actionsList.size) {
+                    IconButton(onClick = { actionsEventList[i].invoke() }) {
+                        Icon(imageVector = actionsList[i], contentDescription = null)
+                    }
+                }
+        }
+    )
 
 
 }

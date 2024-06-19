@@ -20,10 +20,10 @@ import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.IconButtonDefaults
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -35,10 +35,12 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import cu.xetid.dtvc.androidtrainingapp.home.viewmodel.HomeViewModel
 import cu.xetid.dtvc.androidtrainingapp.home.screen.component.ContactButtonBar
 import cu.xetid.dtvc.androidtrainingapp.home.screen.component.ContactFloatingActionButton
 import cu.xetid.dtvc.androidtrainingapp.home.screen.component.GenericContactAccountImage
+import cu.xetid.dtvc.androidtrainingapp.home.state.HomeState
 import cu.xetid.dtvc.androidtrainingapp.model.dto.Contact
 import cu.xetid.dtvc.androidtrainingapp.ui.component.GenericText
 import cu.xetid.dtvc.androidtrainingapp.ui.component.GenericTopAppBar
@@ -46,14 +48,9 @@ import cu.xetid.dtvc.androidtrainingapp.ui.navigation.routes.update.UpdateRoute
 
 @Composable
 fun HomeScreen(viewModel: HomeViewModel = hiltViewModel()) {
-    // val getHomeState by viewModel.homeUiState.collectAsState()
-    val selectAll by viewModel.selectAll.collectAsState()
-    val isLoading by viewModel.isLoading.collectAsState()
-    val isError by viewModel.isError.collectAsState()
 
-    LaunchedEffect(viewModel) {
-        viewModel.readAllContact()
-    }
+    val stateHome by viewModel.homeUIState.collectAsState()
+    val selectAllContactSubscriberAtUI by viewModel.allContactSubscriberAtUI.collectAsStateWithLifecycle()
 
     Scaffold(
         topBar = {
@@ -66,15 +63,13 @@ fun HomeScreen(viewModel: HomeViewModel = hiltViewModel()) {
             ContactButtonBar(navigateTo = viewModel::navigateTo)
         },
         floatingActionButton = { ContactFloatingActionButton(navigateToInsert = viewModel::navigateTo) }) {
-
         HomeContent(
-            it,
+            paddingValues =  it,
             navigateTo = viewModel::navigateTo,
-            //  getHomeState = getHomeState,
-            selectAll = selectAll,
-            isLoading = isLoading,
-            isError = isError,
             onDelete = viewModel::deleteContact,
+            stateHome = stateHome,
+            modifier = Modifier,
+            selectAll = selectAllContactSubscriberAtUI
         )
 
     }
@@ -85,43 +80,41 @@ fun HomeContent(
     paddingValues: PaddingValues,
     modifier: Modifier = Modifier,
     navigateTo: (String) -> Unit,
-    selectAll: List<Contact>,
-    isLoading: Boolean,
-    isError: String,
     onDelete: (Contact) -> Unit,
+    stateHome: HomeState,
+    selectAll:List<Contact>?
 ) {
-    val size = selectAll.size
+    val size = selectAll?.size ?:0
     LazyColumn(
         modifier = modifier
             .padding(paddingValues)
             .fillMaxSize(),
         horizontalAlignment = Alignment.CenterHorizontally,
     ) {
-        if (!isLoading) {
+        if (!stateHome.loading) {
+
             items(size) {
                 Spacer(modifier = modifier.height(16.dp))
                 CardContact(
-                    contact = selectAll[it],
+                    contact = selectAll!![it],
                     navigateTo = navigateTo,
                     onDelete = onDelete,
                 )
             }
 
             item {
-                if (isError.isNotBlank()) Text(text = isError)
+                if (stateHome.error.isNotBlank()) Text(text = stateHome.error, color = MaterialTheme.colorScheme.error)
             }
         } else {
             item {
-
                 Box(modifier = modifier.fillParentMaxSize(), contentAlignment = Alignment.Center) {
+
                     CircularProgressIndicator()
+
                 }
             }
         }
-
     }
-
-
 }
 
 @Composable

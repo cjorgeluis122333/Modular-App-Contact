@@ -1,5 +1,7 @@
 package cu.xetid.dtvc.androidtrainingapp.ui.component.inceritionupdate
 
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
@@ -15,6 +17,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.text.input.KeyboardType
+import androidx.compose.ui.unit.dp
 
 
 @Composable
@@ -54,7 +57,12 @@ fun InsertContactTextFieldFirstName(
     OutlinedTextField(
         value = firstName,
         onValueChange = { changeTextValue.invoke(it, lastName, city, fontNumber) },
-        label = { Text(text = valueTextField) })
+        label = { Text(text = valueTextField) },
+        maxLines = 1,
+        singleLine = true,
+        modifier = Modifier.fillMaxWidth().padding(horizontal = 32.dp)
+
+    )
 
 
 }
@@ -72,7 +80,12 @@ fun InsertContactTextFieldLastName(
     OutlinedTextField(
         value = lastName,
         onValueChange = { changeTextValue.invoke(firstName, it, city, fontNumber) },
-        label = { Text(text = valueTextField) })
+        label = { Text(text = valueTextField) },
+        maxLines = 1,
+        singleLine = true,
+        modifier = Modifier.fillMaxWidth().padding(horizontal = 32.dp)
+
+    )
 
 
 }
@@ -90,7 +103,11 @@ fun InsertContactTextFieldCity(
     OutlinedTextField(
         value = city,
         onValueChange = { changeTextValue.invoke(firstName, lastName, it, fontNumber) },
-        label = { Text(text = valueTextField) })
+        label = { Text(text = valueTextField) },
+        maxLines = 1,
+        singleLine = true,
+        modifier = Modifier.fillMaxWidth().padding(horizontal = 32.dp)
+    )
 
 }
 
@@ -107,7 +124,13 @@ fun InsertContactTextFieldFontNumber(
     OutlinedTextField(
         value = fontNumber,
         onValueChange = { changeTextValue.invoke(firstName, lastName, city, it) },
-        label = { Text(text = valueTextField) }, keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number))
+        label = { Text(text = valueTextField) },
+        keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number),
+        maxLines = 1,
+        singleLine = true,
+        modifier = Modifier.fillMaxWidth().padding(horizontal = 32.dp)
+
+    )
 
 
 }

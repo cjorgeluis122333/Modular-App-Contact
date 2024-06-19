@@ -8,12 +8,16 @@ import cu.xetid.dtvc.androidtrainingapp.domain.usecase.contact.ContactSelectFavo
 import cu.xetid.dtvc.androidtrainingapp.domain.usecase.contact.proyection.ContactSearchLocationUsesCase
 import cu.xetid.dtvc.androidtrainingapp.domain.usecase.contact.proyection.ContactSearchNameUsesCase
 import cu.xetid.dtvc.androidtrainingapp.domain.usecase.contact.proyection.ContactSearchPictureUsesCase
+import cu.xetid.dtvc.androidtrainingapp.home.state.HomeState
 import cu.xetid.dtvc.androidtrainingapp.model.dto.Contact
 import cu.xetid.dtvc.androidtrainingapp.ui.navigation.NavigationCommand
 import cu.xetid.dtvc.androidtrainingapp.ui.navigation.Navigator
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.stateIn
+import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
@@ -22,7 +26,7 @@ class HomeViewModel @Inject constructor(
     private val navigator: Navigator,
     private val contactSelectAllUsesCase: ContactSelectAllUsesCase,
     private val contactDeleteUsesCase: ContactDeleteUsesCase,
-    private val selectFavoriteContactUsesCase:ContactSelectFavoriteUsesCase,
+    private val selectFavoriteContactUsesCase: ContactSelectFavoriteUsesCase,
     private val contactSearchLocationUsesCase: ContactSearchLocationUsesCase,
     private val contactSearchPictureUsesCase: ContactSearchPictureUsesCase,
     private val contactSearchNameUsesCase: ContactSearchNameUsesCase
@@ -31,47 +35,27 @@ class HomeViewModel @Inject constructor(
 
     //------------------------------------------------Contact event
 
-    fun readAllContact() {
-        viewModelScope.launch {
-            try {
-                contactSelectAllUsesCase.invoke().collect {
-                    _isLoading.value = true
-                    _selectAll.value = it
-                    _isLoading.value = false
-                }
-
-            } catch (e: Exception) {
-                _isError.value = e.message.orEmpty()
-            }
-        }
-    }
-
-    fun selectFavoriteContact() {
-        viewModelScope.launch {
-            try {
-                selectFavoriteContactUsesCase.invoke().collect {
-                    _isLoading.value = true
-                    _selectFavorite.value = it
-                    _isLoading.value = false
-                }
-
-            } catch (e: Exception) {
-                _isError.value = e.message.orEmpty()
-            }
-        }
-    }
-
 
     fun deleteContact(contactToDelete: Contact) {
         viewModelScope.launch {
             try {
+                changeState(true, "")
                 contactDeleteUsesCase.invoke(contactToDelete)
+                changeState(false, "")
             } catch (e: Exception) {
-                _isError.value = e.message.orEmpty()
+                changeState(false, e.message.orEmpty())
             }
         }
     }
 
+    private fun changeState(isLoading: Boolean, onError: String) {
+        _homeUiState.update {
+            it.copy(
+                loading = isLoading,
+                error = onError
+            )
+        }
+    }
 
 
 // ---------------------------------------------------Navigation control
@@ -81,23 +65,31 @@ class HomeViewModel @Inject constructor(
     }
 
 // ---------------------------------------------------Variables control
+    /**
+     * Load the contacts when start the view is not net a init or LaunchEffect
+     */
 
-    private val _selectFavorite: MutableStateFlow<List<Contact>> =
-        MutableStateFlow(value = emptyList())
-    val selectFavorite: StateFlow<List<Contact>> = _selectFavorite
+    val allContactSubscriberAtUI = contactSelectAllUsesCase().stateIn(
+        scope = viewModelScope,
+        started = SharingStarted.WhileSubscribed(5000),
+        initialValue = null
+    )
+
+    /**
+     * Load the contacts when start the view is not net a init or LaunchEffect
+     */
+
+    val allFavoriteContactSubscriberAtUI = selectFavoriteContactUsesCase().stateIn(
+        scope = viewModelScope,
+        started = SharingStarted.WhileSubscribed(5000),
+        initialValue = null
+    )
+
+// ---------------------------------------------------state control
+    private val _homeUiState: MutableStateFlow<HomeState> = MutableStateFlow(HomeState())
+    val homeUIState: StateFlow<HomeState> = _homeUiState
 
 
-    private val _selectAll: MutableStateFlow<List<Contact>> =
-        MutableStateFlow(value = emptyList())
-    val selectAll: StateFlow<List<Contact>> = _selectAll
-
-    private val _isLoading: MutableStateFlow<Boolean> =
-        MutableStateFlow(value = true)
-    val isLoading: StateFlow<Boolean> = _isLoading
-
-    private val _isError: MutableStateFlow<String> =
-        MutableStateFlow(value = "")
-    val isError: StateFlow<String> = _isError
 
 
 }

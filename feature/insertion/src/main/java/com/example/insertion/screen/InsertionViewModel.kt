@@ -2,14 +2,15 @@ package com.example.insertion.screen
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.example.insertion.state.InsertionState
 import cu.xetid.dtvc.androidtrainingapp.domain.usecase.contact.ContactInsertionUsesCase
 import cu.xetid.dtvc.androidtrainingapp.model.dto.Contact
 import cu.xetid.dtvc.androidtrainingapp.ui.navigation.NavigationCommand
 import cu.xetid.dtvc.androidtrainingapp.ui.navigation.Navigator
-import cu.xetid.dtvc.androidtrainingapp.ui.navigation.routes.home.HomeRoute
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
@@ -33,26 +34,26 @@ class InsertionViewModel @Inject constructor(
                     )
                     navigateBack()
                 } else {
-                    _isError.value = "Complete all text field"
+                    changeState("Complete all text field")
                 }
 
             } catch (e: Exception) {
-                _isError.value = e.message.orEmpty()
-
+                changeState( e.message.orEmpty())
             }
         }
     }
 
-     fun isReadyForInsert(): Boolean {
+    fun isReadyForInsert(): Boolean {
         return _firstName.value.isNotBlank() && _fontNumber.value.length == 8
     }
 
-    fun changeText(firstName: String, lastName: String, city: String,fontNumber: String) {
+    fun changeText(firstName: String, lastName: String, city: String, fontNumber: String) {
         _firstName.value = firstName
         _lastName.value = lastName
         _city.value = city
-        if (fontNumber.length > 8) _isError.value =
+        if (fontNumber.length > 8) changeState(
             "The font number do not have more than 8 characters"
+        )
         else _fontNumber.value = fontNumber
 
     }
@@ -60,7 +61,15 @@ class InsertionViewModel @Inject constructor(
     fun navigateBack() {
         navigator.navigate(NavigationCommand.PopBackstack)
     }
+    //                             Change state
 
+    private fun changeState(isError: String) {
+        _insertState.update {
+            it.copy(
+                error = isError,
+            )
+        }
+    }
 
     //                            All variables
     private val _firstName: MutableStateFlow<String> = MutableStateFlow("")
@@ -76,10 +85,8 @@ class InsertionViewModel @Inject constructor(
     val city: StateFlow<String> = _city
 
     //                       State
-
-    private val _isError: MutableStateFlow<String> =
-        MutableStateFlow(value = "")
-    val isError: StateFlow<String> = _isError
+    private val _insertState: MutableStateFlow<InsertionState> = MutableStateFlow(InsertionState())
+    val insertionState: StateFlow<InsertionState> = _insertState
 
 
 }

@@ -3,7 +3,9 @@ package com.example.update.screen
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.material.icons.Icons
@@ -18,7 +20,9 @@ import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
+import com.example.update.state.UpdateState
 import cu.xetid.dtvc.androidtrainingapp.model.dto.Contact
 import cu.xetid.dtvc.androidtrainingapp.ui.component.GenericButtonWithBackgroundComponent
 import cu.xetid.dtvc.androidtrainingapp.ui.component.GenericText
@@ -40,7 +44,7 @@ fun UpdateScreen(viewModel: UpdateViewModel = hiltViewModel(), userId: Int) {
     val city by viewModel.city.collectAsState()
     val contact by viewModel.contactToUpdate.collectAsState()
     val favorite by viewModel.factory.collectAsState()
-    val isError by viewModel.isError.collectAsState()
+    val updateState by viewModel.updateState.collectAsState()
 
     Scaffold (topBar = {
         GenericTopAppBar(title = "Update", navigateBack = viewModel::navigateBack)
@@ -52,7 +56,7 @@ fun UpdateScreen(viewModel: UpdateViewModel = hiltViewModel(), userId: Int) {
             fontNumber = fontNumber,
             city = city,
             changeTextValue = viewModel::changeText,
-            isError = isError,
+            updateState = updateState,
             updateContact = viewModel::updateContact,
             favorite = favorite,
             onFavorite = viewModel::changeIsFavorite,
@@ -73,7 +77,7 @@ fun UpdateContent(
     favorite: Boolean,
     onFavorite: () -> Unit,
     changeTextValue: (String, String, String, String) -> Unit,
-    isError: String,
+    updateState: UpdateState,
     updateContact: () -> Unit,
     contact: Contact,
     isReadyForUpdate:Boolean
@@ -115,7 +119,7 @@ fun UpdateContent(
                 fontNumber = fontNumber,
                 city = city,
                 changeTextValue = changeTextValue,
-                valueTextField = "Last Name"
+                valueTextField = "Last Name (Optional)"
             )
             InsertContactTextFieldFontNumber(
                 firstName = firstName,
@@ -132,16 +136,16 @@ fun UpdateContent(
                 city = city,
                 fontNumber = fontNumber,
                 changeTextValue = changeTextValue,
-                valueTextField = "City"
+                valueTextField = "City (Optional)"
             )
-
+            Spacer(modifier = Modifier.height(16.dp))
             GenericButtonWithBackgroundComponent(
                 navigateTo = { updateContact.invoke() },
                 buttonText = "Update contact",
                 isEnable = isReadyForUpdate
             )
 
-            if (isError.isNotBlank()) Text(text = isError, color = Color.Red)
+            if (updateState.error.isNotBlank()) Text(text = updateState.error, color = Color.Red)
 
         }
 

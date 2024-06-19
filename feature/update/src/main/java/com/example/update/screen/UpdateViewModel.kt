@@ -22,12 +22,11 @@ class UpdateViewModel @Inject constructor(
     private val contactUpdateUsesCase: ContactUpdateUsesCase
 ) : ViewModel() {
 
-    //Function will start with the application
+    //Function will start with the application in a Launched Effect
     fun getSpecificContact(idContact: Int) {
 
         viewModelScope.launch {
             try {
-
                 contactSelectByIdUsesCase.invoke(idContact).collect {
                     _contactToUpdate.value = it
                     _city.value = _contactToUpdate.value.city.orEmpty()
@@ -35,10 +34,9 @@ class UpdateViewModel @Inject constructor(
                     _lastName.value = _contactToUpdate.value.lastName.orEmpty()
                     _firstName.value = _contactToUpdate.value.firstName
                     _favorite.value = _contactToUpdate.value.favorite
-                    _isLoading.value = false
                 }
             } catch (e: Exception) {
-                _isError.value = e.message.orEmpty()
+                changeState(e.message.orEmpty())
             }
         }
     }
@@ -56,10 +54,10 @@ class UpdateViewModel @Inject constructor(
         )
         viewModelScope.launch {
             if (isReadyForUpdate()) {
-                contactUpdateUsesCase.invoke(contactTmp)
+                contactUpdateUsesCase(contactTmp)
                 navigateBack()
             } else {
-                _isError.value = "Check the text value"
+                changeState("Check the text value")
             }
         }
     }
@@ -73,8 +71,8 @@ class UpdateViewModel @Inject constructor(
         _firstName.value = firstName
         _lastName.value = lastName
         _city.value = city
-        if (fontNumber.length > 8) _isError.value =
-            "The font number do not have more than 8 characters"
+        if (fontNumber.length > 8)
+            changeState(isError = "The font number do not have more than 8 characters")
         else _fontNumber.value = fontNumber
 
 
@@ -90,11 +88,10 @@ class UpdateViewModel @Inject constructor(
     }
 
     //                            Change State
-    private fun changeState(isLoading: Boolean, isError: String) {
+    private fun changeState(isError: String) {
         _updateState.update {
             it.copy(
-                error = isError,
-                isLoading = isLoading
+                error = isError
             )
         }
     }
@@ -121,15 +118,8 @@ class UpdateViewModel @Inject constructor(
     private val _updateState: MutableStateFlow<UpdateState> = MutableStateFlow(UpdateState())
     val updateState: StateFlow<UpdateState> = _updateState
 
-
     private val _contactToUpdate: MutableStateFlow<Contact> = MutableStateFlow(Contact())
     val contactToUpdate: StateFlow<Contact> = _contactToUpdate
-
-    private val _isLoading: MutableStateFlow<Boolean> = MutableStateFlow(true)
-    val isLoading: StateFlow<Boolean> = _isLoading
-
-    private val _isError: MutableStateFlow<String> = MutableStateFlow("")
-    val isError: StateFlow<String> = _isError
 
 
 }

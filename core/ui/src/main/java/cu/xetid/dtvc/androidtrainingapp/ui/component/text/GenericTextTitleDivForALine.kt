@@ -1,4 +1,4 @@
-package cu.xetid.dtvc.androidtrainingapp.ui.component
+package cu.xetid.dtvc.androidtrainingapp.ui.component.text
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Row
@@ -17,7 +17,8 @@ import androidx.compose.ui.unit.sp
 @Composable
 fun GenericTextTitleDivForALine(
     textTitle: String,
-    textStyle: TextStyle = MaterialTheme.typography.bodyLarge
+    textStyle: TextStyle = MaterialTheme.typography.bodyLarge,
+    maxLines:Int=1
 ) {
 
     Row(
@@ -35,6 +36,7 @@ fun GenericTextTitleDivForALine(
             color = MaterialTheme.colorScheme.onPrimaryContainer,
             letterSpacing = 1.sp,
             fontSize = textStyle.fontSize,
+            maxLines = maxLines,
             modifier = Modifier
                 .weight(1f)
 

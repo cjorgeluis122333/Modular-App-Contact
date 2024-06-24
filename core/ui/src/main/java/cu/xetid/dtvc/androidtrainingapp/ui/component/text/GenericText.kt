@@ -1,4 +1,4 @@
-package cu.xetid.dtvc.androidtrainingapp.ui.component
+package cu.xetid.dtvc.androidtrainingapp.ui.component.text
 
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text

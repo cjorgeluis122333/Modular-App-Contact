@@ -18,12 +18,12 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.example.insertion.state.InsertionState
-import cu.xetid.dtvc.androidtrainingapp.ui.component.GenericButtonWithBackgroundComponent
+import cu.xetid.dtvc.androidtrainingapp.ui.component.button.GenericButtonWithBackgroundComponent
 import cu.xetid.dtvc.androidtrainingapp.ui.component.GenericTopAppBar
-import cu.xetid.dtvc.androidtrainingapp.ui.component.inceritionupdate.InsertContactTextFieldCity
-import cu.xetid.dtvc.androidtrainingapp.ui.component.inceritionupdate.InsertContactTextFieldFirstName
-import cu.xetid.dtvc.androidtrainingapp.ui.component.inceritionupdate.InsertContactTextFieldFontNumber
-import cu.xetid.dtvc.androidtrainingapp.ui.component.inceritionupdate.InsertContactTextFieldLastName
+import cu.xetid.dtvc.androidtrainingapp.ui.component.notGeneric.InsertContactTextFieldCity
+import cu.xetid.dtvc.androidtrainingapp.ui.component.notGeneric.InsertContactTextFieldFirstName
+import cu.xetid.dtvc.androidtrainingapp.ui.component.notGeneric.InsertContactTextFieldFontNumber
+import cu.xetid.dtvc.androidtrainingapp.ui.component.notGeneric.InsertContactTextFieldLastName
 
 @Composable
 fun InsertionScreen(viewModel: InsertionViewModel = hiltViewModel()) {

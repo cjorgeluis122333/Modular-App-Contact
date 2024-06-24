@@ -1,4 +1,4 @@
-package cu.xetid.dtvc.androidtrainingapp.ui.component
+package cu.xetid.dtvc.androidtrainingapp.ui.component.notGeneric
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
@@ -18,6 +18,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 import cu.xetid.dtvc.androidtrainingapp.ui.R
+import cu.xetid.dtvc.androidtrainingapp.ui.component.text.GenericTextTitleDivForALine
 
 @Composable
 fun GStarAppLoading(imageToPainter:Int = R.drawable.contacts2) {

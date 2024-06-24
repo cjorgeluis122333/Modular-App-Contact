@@ -1,4 +1,4 @@
-package cu.xetid.dtvc.androidtrainingapp.ui.component
+package cu.xetid.dtvc.androidtrainingapp.ui.component.screen
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement

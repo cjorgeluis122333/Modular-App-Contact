@@ -4,33 +4,37 @@ import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.material3.Card
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.ShapeDefaults
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import coil.compose.rememberAsyncImagePainter
+import coil.compose.rememberImagePainter
 import coil.request.ImageRequest
 import cu.xetid.dtvc.androidtrainingapp.model.dto.Contact
 
 
 @Composable
 fun GenericContactAccountImage(contact: Contact, modifier: Modifier = Modifier, contactImageSize:Int = 42) {
-
+Box(modifier = modifier.fillMaxWidth(), contentAlignment = Alignment.Center) {
     Card(
         shape = ShapeDefaults.ExtraLarge,
         modifier = modifier
             .size(contactImageSize.dp)
-            .padding(horizontal =  16.dp)
     ) {
         if (contact.thumbnail?.length!! > 1) {
             Image(
@@ -42,7 +46,10 @@ fun GenericContactAccountImage(contact: Contact, modifier: Modifier = Modifier, 
                         }).build()
                 ),
                 contentDescription = "Contact picture",
-                modifier = Modifier.fillMaxSize()
+                modifier = modifier
+                    .size(contactImageSize.dp)
+                    .clip(shape = MaterialTheme.shapes.extraLarge),
+                contentScale = ContentScale.Crop
             )
         } else {
             Box(
@@ -73,4 +80,5 @@ fun GenericContactAccountImage(contact: Contact, modifier: Modifier = Modifier, 
             }
         }
     }
+}
 }

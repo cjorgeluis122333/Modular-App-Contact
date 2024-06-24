@@ -1,4 +1,4 @@
-package cu.xetid.dtvc.androidtrainingapp.ui.component.colums
+package cu.xetid.dtvc.androidtrainingapp.ui.component.text
 
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth

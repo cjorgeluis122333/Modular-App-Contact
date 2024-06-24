@@ -1,48 +1,36 @@
-package cu.xetid.dtvc.androidtrainingapp.ui.component.inceritionupdate
+package cu.xetid.dtvc.androidtrainingapp.ui.component.notGeneric
 
+import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.text.KeyboardOptions
-import androidx.compose.material3.Icon
-import androidx.compose.material3.IconButton
-import androidx.compose.material3.IconButtonDefaults
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
-import androidx.compose.runtime.setValue
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.unit.dp
+import cu.xetid.dtvc.androidtrainingapp.ui.R
+import cu.xetid.dtvc.androidtrainingapp.ui.component.image.GenericImageRemote
 
 
 @Composable
-fun CardUpdateIsFavoriteIconsButtonComponent(
+fun CardPicture(
     modifier: Modifier = Modifier,
-    onFunction: () -> Unit,
-    isFavorite: Boolean,
-    imageVectorToPaint: ImageVector,
+    imageRouteToPaint: String
 ) {
-    var isButtonEnabled by remember {
-        mutableStateOf(true)
-    }
-    IconButton(
-        onClick = {
-            isButtonEnabled = !isButtonEnabled
-            onFunction.invoke()
-            isButtonEnabled = !isButtonEnabled
-        },
-        modifier = modifier,
-        enabled = isButtonEnabled,
-        colors = IconButtonDefaults.iconButtonColors(contentColor = if (isFavorite) Color.Yellow else Color.LightGray)
-    ) {
-        Icon(imageVector = imageVectorToPaint, contentDescription = "Favorite")
+    Box(modifier = modifier.fillMaxWidth(), contentAlignment = Alignment.Center) {
+        GenericImageRemote(
+            urlImageToPaint = imageRouteToPaint,
+            loadingResDrawableImage = R.drawable.contacts2,
+            errorResDrawableImage = R.drawable.contacts2,
+            imageSize = 80
+        )
     }
 }
+
 
 @Composable
 fun InsertContactTextFieldFirstName(
@@ -60,7 +48,9 @@ fun InsertContactTextFieldFirstName(
         label = { Text(text = valueTextField) },
         maxLines = 1,
         singleLine = true,
-        modifier = Modifier.fillMaxWidth().padding(horizontal = 32.dp)
+        modifier = Modifier
+            .fillMaxWidth()
+            .padding(horizontal = 32.dp)
 
     )
 
@@ -83,7 +73,9 @@ fun InsertContactTextFieldLastName(
         label = { Text(text = valueTextField) },
         maxLines = 1,
         singleLine = true,
-        modifier = Modifier.fillMaxWidth().padding(horizontal = 32.dp)
+        modifier = Modifier
+            .fillMaxWidth()
+            .padding(horizontal = 32.dp)
 
     )
 
@@ -106,7 +98,9 @@ fun InsertContactTextFieldCity(
         label = { Text(text = valueTextField) },
         maxLines = 1,
         singleLine = true,
-        modifier = Modifier.fillMaxWidth().padding(horizontal = 32.dp)
+        modifier = Modifier
+            .fillMaxWidth()
+            .padding(horizontal = 32.dp)
     )
 
 }
@@ -128,7 +122,9 @@ fun InsertContactTextFieldFontNumber(
         keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number),
         maxLines = 1,
         singleLine = true,
-        modifier = Modifier.fillMaxWidth().padding(horizontal = 32.dp)
+        modifier = Modifier
+            .fillMaxWidth()
+            .padding(horizontal = 32.dp)
 
     )
 

@@ -1,4 +1,4 @@
-package cu.xetid.dtvc.androidtrainingapp.ui.component
+package cu.xetid.dtvc.androidtrainingapp.ui.component.image
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.fillMaxWidth

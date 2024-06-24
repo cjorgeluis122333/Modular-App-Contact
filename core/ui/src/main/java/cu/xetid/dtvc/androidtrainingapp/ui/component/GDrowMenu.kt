@@ -14,49 +14,41 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.res.painterResource
-import cu.xetid.dtvc.androidtrainingapp.ui.R
 
 
 @Composable
 fun GenericDropDownMenu(
-    iconList: List<Int> = listOf(R.drawable.logout),
-    textList: List<String> = listOf("Log out"),
-    onCloseSection: () -> Unit
+    iconList: List<Int> = listOf(),
+    textList: List<String> = listOf(),
+    eventList: List<() -> Unit> = emptyList(),
 ) {
 
     var isExpanded by remember { mutableStateOf(false) }
 
-    IconButton(
-        onClick = {
-            isExpanded = true
-        }
-    ) {
+    IconButton(onClick = {
+        isExpanded = true
+    }) {
         Icon(
-            imageVector = Icons.Default.MoreVert,
-            contentDescription = "Open Menu"
+            imageVector = Icons.Default.MoreVert, contentDescription = "Open Menu"
         )
     }
 
 
     DropdownMenu(expanded = isExpanded, onDismissRequest = { isExpanded = false }) {
-        for (i in 0..iconList.size) {
+
+        for (i in iconList.indices) {
             DropdownMenuItem(trailingIcon = {
-                Icon(
-                    painter = painterResource(id = iconList[i]),
-                    contentDescription = "item"
-                )
-            },
-                text = {
-                    Text(
-                        text = textList[i],
-                        style = MaterialTheme.typography.bodyLarge,
-                        color = MaterialTheme.colorScheme.onPrimaryContainer
-                    )
-                },
+                Icon(painter = painterResource(id = iconList[i]), contentDescription = "item") },
+                text = { Text(
+                    text = textList[i],
+                    style = MaterialTheme.typography.bodyLarge,
+                    color = MaterialTheme.colorScheme.onPrimaryContainer
+                ) },
                 onClick = {
-                    onCloseSection.invoke()
-                    isExpanded = false
-                })
-        }
-    }
+                eventList[i].invoke()
+                isExpanded = false
+            }
+            )//End DropdownMenuItem
+        }//End for
+    }//End DropdownMenu
 }

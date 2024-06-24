@@ -34,7 +34,6 @@ fun FavoriteScreen(viewModel: HomeViewModel = hiltViewModel()) {
             paddingValues = it,
             navigateTo = viewModel::navigateTo,
             selectAll = selectFavoriteContactSubscriberAtUi,
-            onDelete = viewModel::deleteContact,
             stateHome = stateFavorite,
             modifier = Modifier
         )

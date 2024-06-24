@@ -1,4 +1,4 @@
-package cu.xetid.dtvc.androidtrainingapp.ui.component
+package com.example.update.screen.component
 
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.ArrowBack
@@ -20,15 +20,17 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.style.TextDecoration
 import androidx.compose.ui.text.style.TextOverflow
 
+
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun GenericTopAppBar(
+fun UpdateTopAppBar(
     title: String,
     navigateBack: () -> Unit = {},
     isNavigationIconEnable: Boolean = true,
     actionsIconsList: List<ImageVector> = emptyList(),
     actionsEventList: List<() -> Unit> = emptyList(),
-    enableIsRestarted: Boolean = true,
+    enableIsRestarted: List<Boolean> = emptyList(),
+    isFavorite: Boolean = false
 ) {
 
     var isBackEnable by rememberSaveable { mutableStateOf(true) }
@@ -71,7 +73,7 @@ fun GenericTopAppBar(
                 for (i in actionsIconsList.indices) {
                     IconButton(
                         onClick = {
-                            if (enableIsRestarted) {
+                            if (enableIsRestarted[i]) {
                                 isActionEnable = !isActionEnable
                                 actionsEventList[i].invoke()
                                 isActionEnable = !isActionEnable
@@ -80,9 +82,16 @@ fun GenericTopAppBar(
                                 actionsEventList[i].invoke()
                             }
                         },
-                        enabled = if (enableIsRestarted) isActionEnable else isBackEnable,
+                        enabled = if (enableIsRestarted[i]) isActionEnable else isBackEnable,
                     ) {
-                         Icon(imageVector = actionsIconsList[i], contentDescription = null)
+                        Icon(
+                            imageVector = actionsIconsList[i],
+                            contentDescription = null,
+                            tint = if (i == 1 && isFavorite)
+                                MaterialTheme.colorScheme.contentColorFor(MaterialTheme.colorScheme.onPrimaryContainer)
+                            else
+                                MaterialTheme.colorScheme.contentColorFor(MaterialTheme.colorScheme.primaryContainer)
+                        )
                     }
                 }
         }

@@ -17,7 +17,7 @@ class ContactRemoteDataSourceImplement @Inject constructor(
 ) : RemoteDatasourceAbstraction(), ContactRemoteDataSource {
     override suspend fun getUserName(): ResultValue<ContactNameProjection> {
         val resultValueName: ResultValue<ContactNameProjection> = safeApiCall {
-            contactApiService.getUserName().toModelAsProjectionName()
+            contactApiService.getUserName().results[0].name!!.toModelAsProjectionName()
         }
         return super.checkError(resultValueName) as ResultValue<ContactNameProjection>
 
@@ -25,14 +25,14 @@ class ContactRemoteDataSourceImplement @Inject constructor(
 
     override suspend fun getUserLocation(): ResultValue<ContactLocationProjection> {
         val resultValueLocation: ResultValue<ContactLocationProjection> = safeApiCall {
-            contactApiService.getUserLocation().toModelAsProjectionLocation()
+            contactApiService.getUserLocation().results[0].location!!.toModelAsProjectionLocation()
         }
         return super.checkError(resultValueLocation) as ResultValue<ContactLocationProjection>
     }
 
     override suspend fun getUserPicture(): ResultValue<ContactPictureProjection> {
         val resultValuePicture: ResultValue<ContactPictureProjection> = safeApiCall {
-            contactApiService.getUserPicture().toModelAsProjectionPicture()
+            contactApiService.getUserPicture().results[0].picture!!.toModelAsProjectionPicture()
         }
         return super.checkError(resultValuePicture) as ResultValue<ContactPictureProjection>
 

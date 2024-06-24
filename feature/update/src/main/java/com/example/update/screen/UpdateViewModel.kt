@@ -3,6 +3,7 @@ package com.example.update.screen
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.update.state.UpdateState
+import cu.xetid.dtvc.androidtrainingapp.domain.usecase.contact.ContactDeleteUsesCase
 import cu.xetid.dtvc.androidtrainingapp.domain.usecase.contact.ContactSelectByIdUsesCase
 import cu.xetid.dtvc.androidtrainingapp.domain.usecase.contact.ContactUpdateUsesCase
 import cu.xetid.dtvc.androidtrainingapp.model.dto.Contact
@@ -19,13 +20,15 @@ import javax.inject.Inject
 class UpdateViewModel @Inject constructor(
     private val navigator: Navigator,
     private val contactSelectByIdUsesCase: ContactSelectByIdUsesCase,
-    private val contactUpdateUsesCase: ContactUpdateUsesCase
+    private val contactUpdateUsesCase: ContactUpdateUsesCase,
+    private val deleteUsesCase: ContactDeleteUsesCase
 ) : ViewModel() {
 
     //Function will start with the application in a Launched Effect
     fun getSpecificContact(idContact: Int) {
 
         viewModelScope.launch {
+            changeState(isError = "", isLoading = false)
             try {
                 contactSelectByIdUsesCase.invoke(idContact).collect {
                     _contactToUpdate.value = it
@@ -36,13 +39,15 @@ class UpdateViewModel @Inject constructor(
                     _favorite.value = _contactToUpdate.value.favorite
                 }
             } catch (e: Exception) {
-                changeState(e.message.orEmpty())
+                //     changeState(isError = e.message.orEmpty(), isLoading = false)
             }
         }
     }
 
-    //Event update
-    fun updateContact() {
+    //                                                    Events
+    fun onUpdateContact() {
+        changeState(isError = "", isLoading = true)
+
         val contactTmp = Contact(
             contactId = _contactToUpdate.value.contactId,
             firstName = _firstName.value,
@@ -53,21 +58,38 @@ class UpdateViewModel @Inject constructor(
             favorite = _favorite.value
         )
         viewModelScope.launch {
-            if (isReadyForUpdate()) {
-                contactUpdateUsesCase(contactTmp)
-                navigateBack()
-            } else {
-                changeState("Check the text value")
-            }
+
+                if (onIsReadyForUpdate()) {
+                    contactUpdateUsesCase(contactTmp)
+                    navigateBack()
+                } else {
+                    changeState(isLoading = false, isError = "Check the text value")
+                }
+
+
         }
     }
 
-    fun isReadyForUpdate(): Boolean {
-        return _firstName.value.isNotBlank() && _fontNumber.value.length == 8
+    fun onDeleteContact() {
+        viewModelScope.launch {
+            changeState(isError = "", isLoading = true)
+            deleteUsesCase(_contactToUpdate.value)
+            navigateBack()
+        }
+    }
+
+    fun onIsReadyForUpdate(): Boolean {
+        try {
+            val tmp = _fontNumber.value.toLong()
+            return _firstName.value.isNotBlank() && _fontNumber.value.length == 8
+
+        } catch (e: NumberFormatException) {
+            return false
+        }
 
     }
 
-    fun changeText(firstName: String, lastName: String, city: String, fontNumber: String) {
+    fun onChangeText(firstName: String, lastName: String, city: String, fontNumber: String) {
         _firstName.value = firstName
         _lastName.value = lastName
         _city.value = city
@@ -78,7 +100,8 @@ class UpdateViewModel @Inject constructor(
 
     }
 
-    fun changeIsFavorite() {
+    //Event is change favorite
+    fun onChangeIsFavorite() {
         _favorite.value = !_favorite.value
     }
 
@@ -88,9 +111,13 @@ class UpdateViewModel @Inject constructor(
     }
 
     //                            Change State
-    private fun changeState(isError: String) {
+    private fun changeState(
+        isLoading: Boolean = _updateState.value.isLoading,
+        isError: String = _updateState.value.error
+    ) {
         _updateState.update {
             it.copy(
+                isLoading = isLoading,
                 error = isError
             )
         }
@@ -111,7 +138,6 @@ class UpdateViewModel @Inject constructor(
 
     private var _favorite: MutableStateFlow<Boolean> = MutableStateFlow(false)
     val factory: StateFlow<Boolean> = _favorite
-
 
     //                        All state
 
